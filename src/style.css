@@ -1,0 +1,42 @@
+/* Reputation — tema oscuro. Acento teal (confianza/red) + dorado (reputación). */
+:root {
+  --bg: #0e1214;
+  --surface: #12181b;
+  --surface-2: #161d20;
+  --line: #222c31;
+  --line-2: #2c3940;
+  --text: #e8f0f0;
+  --text-mid: #bcccce;
+  --text-dim: #7f9497;
+  --accent: #2fd6bf;
+  --accent-press: #22b8a3;
+  --accent-soft: rgba(47, 214, 191, 0.14);
+  --gold: #f0b428;
+  --danger: #ff6b6b;
+  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background:
+    radial-gradient(60rem 36rem at 82% -10%, rgba(47, 214, 191, 0.06), transparent 60%),
+    radial-gradient(48rem 34rem at 6% 6%, rgba(240, 180, 40, 0.05), transparent 62%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+h1, h2, h3 { font-weight: 750; }
+button { -webkit-tap-highlight-color: transparent; }
+button, input { font-family: inherit; }
+::selection { background: var(--accent-soft); }
+
+/* safe-area para topbar sticky y contenido (notch) */
+.topbar { padding-top: env(safe-area-inset-top); }
+.wrap { padding-left: max(clamp(0.9rem, 4vw, 1.5rem), env(safe-area-inset-left)); padding-right: max(clamp(0.9rem, 4vw, 1.5rem), env(safe-area-inset-right)); }

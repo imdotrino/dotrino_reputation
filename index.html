@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0e1214" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Reputation" />
+
+    <title>Reputation — califica y pregunta sobre cualquier cosa | Dotrino</title>
+    <meta name="description" content="Califica y pregunta sobre cualquier cosa única: personas, sitios web, cuentas. Lo que dice tu red de confianza pesa; el ruido de desconocidos, no. Sin anuncios, sin cookies, sin rastreo." />
+    <link rel="canonical" href="https://reputation.dotrino.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:site_name" content="Dotrino" />
+    <meta property="og:title" content="Reputation — califica y pregunta sobre cualquier cosa" />
+    <meta property="og:description" content="Lo que dice tu red de confianza pesa; el ruido de desconocidos, no. Sin anuncios, sin cookies, sin rastreo." />
+    <meta property="og:url" content="https://reputation.dotrino.com/" />
+    <meta property="og:image" content="https://reputation.dotrino.com/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Reputation — califica y pregunta sobre cualquier cosa" />
+    <meta name="twitter:description" content="Lo que dice tu red de confianza pesa; el ruido de desconocidos, no." />
+    <meta name="twitter:image" content="https://reputation.dotrino.com/og.jpg" />
+
+    <!-- JSON-LD WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Reputation",
+        "url": "https://reputation.dotrino.com/",
+        "description": "Califica y pregunta sobre cualquier cosa única, ponderado por tu red de confianza. Sin anuncios, sin cookies, sin rastreo.",
+        "applicationCategory": "SocialNetworkingApplication",
+        "operatingSystem": "Web",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": { "@type": "Organization", "name": "Dotrino", "url": "https://dotrino.com/" }
+      }
+    </script>
+
+    <!-- Analítica cookieless autohospedada (GoatCounter); no cuenta en localhost/LAN. -->
+    <script>window.goatcounter = { path: function (p) { return location.hostname + p } }</script>
+    <script data-goatcounter="https://goat.dotrino.com/count" async src="https://goat.dotrino.com/count.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

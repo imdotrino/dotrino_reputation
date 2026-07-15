@@ -1,0 +1,26 @@
+{
+  "name": "dotrino_reputation",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dotrino/identity": "0.17.0",
+    "@dotrino/install": "0.3.0",
+    "@dotrino/nav": "0.2.1",
+    "@dotrino/reputation": "0.6.0",
+    "@dotrino/store": "0.4.0",
+    "@dotrino/support": "0.7.0",
+    "@dotrino/topbar": "0.2.2",
+    "vue": "^3.5.25"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.7",
+    "vite-plugin-pwa": "^0.21.1"
+  }
+}
