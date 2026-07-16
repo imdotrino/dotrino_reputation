@@ -90,9 +90,10 @@ const typeIcon = { domain: '🌐', x: '𝕏', github: '⌨', linkedin: 'in', ema
 .tchip:hover { border-color: var(--line-2); color: var(--text); }
 .tchip.on { border-color: var(--accent); background: var(--accent-soft); color: var(--text); font-weight: 650; }
 .searchbar { display: flex; gap: 0.5rem; }
-.searchbar input { flex: 1; min-width: 0; padding: 0.95rem 1.1rem; border-radius: 14px; border: 1px solid var(--line-2); background: var(--surface); color: var(--text); font-size: 1.02rem; }
+.searchbar input { flex: 1; min-width: 0; padding: 0.95rem 1.1rem; border-radius: var(--radius-pill); border: 1px solid var(--line-2); background: var(--surface); color: var(--text); font-size: 1.02rem; }
 .searchbar input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.searchbar button { padding: 0 1.4rem; border-radius: 14px; border: none; background: var(--accent); color: #04211f; font-weight: 700; cursor: pointer; font-size: 1rem; }
+.searchbar button { padding: 0 1.4rem; border-radius: var(--radius-pill); border: none; background: var(--accent); color: var(--accent-ink); font-weight: 700; cursor: pointer; font-size: 1rem; }
+.searchbar button:hover:not(:disabled) { background: var(--accent-press); }
 .searchbar button:disabled { opacity: 0.5; cursor: default; }
 .hint { color: var(--text-dim); font-size: 0.85rem; margin: 0.5rem 0.2rem 0; }
 .err { color: var(--danger); font-size: 0.88rem; margin: 0.5rem 0.2rem 0; }

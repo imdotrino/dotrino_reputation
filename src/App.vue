@@ -21,12 +21,16 @@ const topbarRef = ref(null)
 const recents = ref([])
 const current = ref(null)        // { ref, type, value }
 
-// Tema del modal de perfil (topbar es dueño), acorde al oscuro de la app.
+// Tema del modal de perfil (topbar es dueño), acorde al claro Cool & Cozy.
 const profileTheme = {
-  '--ccp-bg': '#12181b', '--ccp-bg-2': '#161d20', '--ccp-bg-3': '#1b2429', '--ccp-bg-4': '#212c31',
-  '--ccp-border': '#26343a', '--ccp-text': '#e8f0f0', '--ccp-muted': '#8ba0a3',
-  '--ccp-accent': '#2fd6bf', '--ccp-accent-2': '#22b8a3', '--ccp-accent-text': '#04211f',
-  '--ccp-gold': '#f0b428', '--ccp-affinity': '#2fd6bf', '--ccp-input-bg': '#161d20', '--ccp-radius': '16px',
+  '--ccp-bg': '#ffffff', '--ccp-bg-2': '#f4f7f9', '--ccp-bg-3': '#eaeff3', '--ccp-bg-4': '#e3e9ed',
+  '--ccp-border': '#cfd8de', '--ccp-text': '#181c1e', '--ccp-muted': '#4a5560',
+  '--ccp-accent': '#00658c', '--ccp-accent-2': '#00506f', '--ccp-accent-text': '#ffffff',
+  '--ccp-gold': '#c98a00', '--ccp-derived': '#b07f00',
+  '--ccp-online': '#00897b', '--ccp-affinity': '#2f8fd6', '--ccp-input-bg': '#f1f4f6', '--ccp-radius': '16px',
+  '--ccp-font': "'Quicksand', 'Hanken Grotesk', system-ui, sans-serif",
+  '--ccp-font-headline': "'Quicksand', 'Bricolage Grotesque', system-ui, sans-serif",
+  '--ccp-font-mono': "'JetBrains Mono', ui-monospace, monospace",
 }
 
 // Pasa identity/reputation/tema al topbar (propiedades JS del Web Component).
@@ -131,18 +135,25 @@ const isProfile = computed(() => current.value?.type === 'profile')
 <style scoped>
 .topbar {
   position: sticky; top: 0; z-index: 100;
-  --dotrino-topbar-bg: rgba(14, 18, 20, 0.9);
+  /* Tema del topbar (el paquete lee estas vars con fallback al oscuro). */
+  --dotrino-topbar-bg: rgba(244, 247, 249, 0.9);
   --dotrino-topbar-border: var(--line);
   --dotrino-topbar-text: var(--text);
   --dotrino-topbar-muted: var(--text-dim);
   --dotrino-topbar-accent: var(--accent);
-  --dotrino-topbar-accent-text: #04211f;
-  --ds-accent: #2fd6bf; --ds-accent-press: #22b8a3;
-  --ds-modal-bg: #12181b; --ds-modal-text: #e8f0f0; --ds-modal-muted: #8ba0a3; --ds-modal-border: #26343a;
+  --dotrino-topbar-accent-text: var(--accent-ink);
+  --dotrino-topbar-font: var(--font-body);
+  /* Moneda de support (vive en el shadow del topbar): las --ds-* heredan hacia
+     adentro y la tematizan clara. */
+  --ds-accent: #00658c; --ds-accent-press: #00506f;
+  --ds-modal-bg: #ffffff; --ds-modal-text: #181c1e; --ds-modal-muted: #4a5560;
+  --ds-modal-border: #e3e9ed; --ds-modal-hover: rgba(0, 0, 0, 0.06);
   display: block;
 }
 .topbar::part(brand-icon) { width: 32px; height: 32px; border-radius: 8px; }
-.topbar::part(brand-name) { font-weight: 800; letter-spacing: -0.01em; }
+.topbar::part(brand-name) { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+.topbar::part(lang) { border-color: var(--line-2); background: var(--surface); }
+.topbar::part(lang-btn) { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; }
 .topbar::part(profile) { width: 36px; height: 36px; background: var(--surface); border-color: var(--line-2); color: var(--text); }
 
 .wrap { max-width: 680px; margin: 0 auto; padding: 1.4rem clamp(0.9rem, 4vw, 1.5rem) 4rem; }
@@ -155,8 +166,8 @@ const isProfile = computed(() => current.value?.type === 'profile')
 .back:hover { color: var(--text); }
 .empty-hint { text-align: center; color: var(--text-dim); padding: 2.5rem 1rem; }
 .cc-install {
-  --cc-install-bg: var(--accent); --cc-install-color: #04211f;
-  --cc-install-bg-hover: var(--accent-press); --cc-install-radius: 999px;
+  --cc-install-bg: var(--accent); --cc-install-color: var(--accent-ink);
+  --cc-install-bg-hover: var(--accent-press); --cc-install-radius: var(--radius-pill);
   --cc-install-pad: 0.45rem 0.95rem; --cc-install-font-size: 0.84rem;
 }
 </style>

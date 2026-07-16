@@ -138,14 +138,15 @@ async function del (r) {
 .qwrap { margin-top: 1.2rem; }
 .qhead h3 { margin: 0 0 0.7rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 700; }
 .ask { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-.ask input, .answer-box input { flex: 1; min-width: 0; padding: 0.7rem 0.9rem; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface-2); color: var(--text); font: inherit; }
-.ask input:focus, .answer-box input:focus { outline: none; border-color: var(--accent); }
-.ask button, .answer-box button { padding: 0.7rem 1.1rem; border-radius: 12px; border: none; background: var(--accent); color: #04211f; font-weight: 700; cursor: pointer; font: inherit; }
+.ask input, .answer-box input { flex: 1; min-width: 0; padding: 0.7rem 0.9rem; border-radius: var(--radius-pill); border: 1px solid var(--line-2); background: var(--surface); color: var(--text); font: inherit; }
+.ask input:focus, .answer-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.ask button, .answer-box button { padding: 0.7rem 1.1rem; border-radius: var(--radius-pill); border: none; background: var(--accent); color: var(--accent-ink); font-weight: 700; cursor: pointer; font: inherit; }
+.ask button:hover:not(:disabled), .answer-box button:hover:not(:disabled) { background: var(--accent-press); }
 .ask button:disabled, .answer-box button:disabled { opacity: 0.5; cursor: default; }
 .muted { color: var(--text-dim); }
 .empty { padding: 1.2rem 0; text-align: center; }
 .qlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-.qitem { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.qitem { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: 0 8px 30px rgba(74, 85, 96, 0.05); }
 .qmain { padding: 0.85rem 1rem; cursor: pointer; }
 .qmain:hover { background: var(--surface-2); }
 .qtext { color: var(--text); font-size: 1rem; line-height: 1.35; margin-bottom: 0.3rem; }

@@ -150,7 +150,9 @@ const aggConoce = computed(() => agg.value?.indicators?.conoce || null)
 </template>
 
 <style scoped>
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+/* Cool & Cozy: card blanca sobre el crema, separada por sombra ambiental suave
+   (no borde duro). */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: 0 8px 30px rgba(74, 85, 96, 0.06); }
 .subj-head { display: flex; align-items: center; gap: 0.85rem; padding: 1.1rem 1.2rem; border-bottom: 1px solid var(--line); background: var(--surface-2); }
 .subj-badge { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; font-size: 1.3rem; background: var(--accent-soft); color: var(--accent); flex: none; }
 .subj-id { display: flex; flex-direction: column; min-width: 0; }
@@ -167,15 +169,16 @@ h3 { margin: 0 0 0.8rem; font-size: 0.82rem; text-transform: uppercase; letter-s
 .star:hover { transform: scale(1.12); }
 .star.on { color: var(--gold); }
 .star.afin.on { color: var(--accent); }
-.star.know.on { color: #9b8cff; }
-.save { font: inherit; cursor: pointer; margin-top: 0.4rem; width: 100%; padding: 0.7rem; border-radius: 12px; border: none; background: var(--accent); color: #04211f; font-weight: 700; font-size: 0.95rem; }
+.star.know.on { color: var(--know); }
+.save { font: inherit; cursor: pointer; margin-top: 0.4rem; width: 100%; padding: 0.7rem; border-radius: var(--radius-pill); border: none; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 0.95rem; }
+.save:hover:not(:disabled) { background: var(--accent-press); }
 .save:disabled { opacity: 0.6; }
 .meter { display: grid; grid-template-columns: 5.5rem 1fr 2.6rem; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
 .mlabel { font-size: 0.85rem; color: var(--text-dim); }
 .bar { height: 9px; border-radius: 999px; background: var(--line); overflow: hidden; }
-.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), #ffcf4d); border-radius: 999px; }
-.afinm .bar i { background: linear-gradient(90deg, var(--accent), #58e6cf); }
-.knowm .bar i { background: linear-gradient(90deg, #8b7cf0, #b0a4ff); }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-2)); border-radius: 999px; }
+.afinm .bar i { background: linear-gradient(90deg, var(--accent), var(--brand-soft)); }
+.knowm .bar i { background: linear-gradient(90deg, var(--know), var(--know-2)); }
 .mval { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; color: var(--text); font-size: 0.9rem; }
 .muted { color: var(--text-dim); font-size: 0.92rem; margin: 0.2rem 0; }
 .sub { font-size: 0.82rem; margin-top: 0.4rem; }
