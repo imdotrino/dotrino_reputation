@@ -16,7 +16,7 @@ const parsed = computed(() => parseSubjectRef(props.subject))
 const typeLabel = computed(() => t.value.types[parsed.value.type] || parsed.value.type)
 const typeIcon = { domain: '🌐', x: '𝕏', github: '⌨', linkedin: 'in', email: '✉', profile: '👤', unknown: '•' }
 
-// mi calificación (confianza/afinidad 0..5|null, conoce true/false/null)
+// mi calificación (afinidad/confianza/conocimiento 0..5|null)
 const conf = ref(null)
 const afin = ref(null)
 const conoce = ref(null)
@@ -37,7 +37,7 @@ async function load () {
     if (mine && mine.indicators) {
       conf.value = num(mine.indicators.confianza)
       afin.value = num(mine.indicators.afinidad)
-      conoce.value = mine.indicators.conoce == null ? null : mine.indicators.conoce >= 3
+      conoce.value = num(mine.indicators.conoce)
     }
     agg.value = await rep.reputationOf(props.subject)
   } catch (_) {}
@@ -49,8 +49,8 @@ watch(() => props.subject, load)
 onMounted(load)
 
 function setStar (axis, v) {
-  if (axis === 'conf') conf.value = conf.value === v ? 0 : v
-  else afin.value = afin.value === v ? 0 : v
+  const r = axis === 'conf' ? conf : axis === 'afin' ? afin : conoce
+  r.value = r.value === v ? 0 : v
 }
 
 async function save () {
@@ -60,7 +60,7 @@ async function save () {
   const map = {}
   if (conf.value != null) map.confianza = conf.value
   if (afin.value != null) map.afinidad = afin.value
-  if (conoce.value != null) map.conoce = conoce.value ? 5 : 0
+  if (conoce.value != null) map.conoce = conoce.value
   if (!Object.keys(map).length) return
   saving.value = true
   try {
@@ -75,6 +75,7 @@ async function save () {
 const pct = (s) => (s == null ? null : Math.round(s * 100))
 const aggConf = computed(() => agg.value?.indicators?.confianza || null)
 const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
+const aggConoce = computed(() => agg.value?.indicators?.conoce || null)
 </script>
 
 <template>
@@ -106,11 +107,11 @@ const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
             @click="setStar('conf', i)" :aria-label="i + '/5'" data-testid="star-conf">★</button>
         </div>
       </div>
-      <div class="axis row">
+      <div class="axis">
         <label>{{ t.axes.conoce }} <small>{{ t.axes.conoceHint }}</small></label>
-        <div class="toggle">
-          <button :class="{ on: conoce === true }" @click="conoce = conoce === true ? null : true" data-testid="conoce-yes">{{ t.axes.yes }}</button>
-          <button :class="{ on: conoce === false }" @click="conoce = conoce === false ? null : false" data-testid="conoce-no">{{ t.axes.no }}</button>
+        <div class="stars" role="radiogroup" :aria-label="t.axes.conoce">
+          <button v-for="i in 5" :key="i" class="star know" :class="{ on: (conoce || 0) >= i }"
+            @click="setStar('conoce', i)" :aria-label="i + '/5'" data-testid="star-conoce">★</button>
         </div>
       </div>
       <button class="save" :disabled="saving" @click="save" data-testid="save-rating">
@@ -122,7 +123,7 @@ const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
     <div class="block agg">
       <h3>{{ t.agg.title }}</h3>
       <div v-if="loading" class="muted">{{ t.loading }}</div>
-      <template v-else-if="agg && (aggConf?.trustedCount || aggAfin?.trustedCount)">
+      <template v-else-if="agg && (aggConf?.trustedCount || aggAfin?.trustedCount || aggConoce?.trustedCount)">
         <div class="meter afinm" v-if="aggAfin && aggAfin.score != null">
           <span class="mlabel">{{ t.agg.afinidad }}</span>
           <span class="bar"><i :style="{ width: pct(aggAfin.score) + '%' }"></i></span>
@@ -133,7 +134,12 @@ const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
           <span class="bar"><i :style="{ width: pct(aggConf.score) + '%' }"></i></span>
           <span class="mval">{{ pct(aggConf.score) }}%</span>
         </div>
-        <p class="sub muted">{{ t.agg.trusted(aggConf?.trustedCount || aggAfin?.trustedCount || 0) }} · {{ t.agg.raw(agg.rawCount || 0) }}</p>
+        <div class="meter knowm" v-if="aggConoce && aggConoce.score != null">
+          <span class="mlabel">{{ t.agg.conoce }}</span>
+          <span class="bar"><i :style="{ width: pct(aggConoce.score) + '%' }"></i></span>
+          <span class="mval">{{ pct(aggConoce.score) }}%</span>
+        </div>
+        <p class="sub muted">{{ t.agg.trusted(aggConf?.trustedCount || aggAfin?.trustedCount || aggConoce?.trustedCount || 0) }} · {{ t.agg.raw(agg.rawCount || 0) }}</p>
       </template>
       <template v-else>
         <p class="muted">{{ t.agg.none }}</p>
@@ -154,7 +160,6 @@ const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
 .block + .block { border-top: 1px solid var(--line); }
 h3 { margin: 0 0 0.8rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 700; }
 .axis { margin-bottom: 0.9rem; }
-.axis.row { display: flex; align-items: center; justify-content: space-between; }
 .axis label { display: block; font-size: 0.95rem; color: var(--text); margin-bottom: 0.35rem; }
 .axis label small { color: var(--text-dim); font-weight: 400; font-size: 0.8rem; margin-left: 0.3rem; }
 .stars { display: flex; gap: 0.15rem; }
@@ -162,17 +167,15 @@ h3 { margin: 0 0 0.8rem; font-size: 0.82rem; text-transform: uppercase; letter-s
 .star:hover { transform: scale(1.12); }
 .star.on { color: var(--gold); }
 .star.afin.on { color: var(--accent); }
-.toggle { display: flex; gap: 0.4rem; }
-.toggle button, .save { font: inherit; cursor: pointer; }
-.toggle button { padding: 0.4rem 1rem; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface-2); color: var(--text-dim); }
-.toggle button.on { background: var(--accent); border-color: var(--accent); color: #04211f; font-weight: 650; }
-.save { margin-top: 0.4rem; width: 100%; padding: 0.7rem; border-radius: 12px; border: none; background: var(--accent); color: #04211f; font-weight: 700; font-size: 0.95rem; }
+.star.know.on { color: #9b8cff; }
+.save { font: inherit; cursor: pointer; margin-top: 0.4rem; width: 100%; padding: 0.7rem; border-radius: 12px; border: none; background: var(--accent); color: #04211f; font-weight: 700; font-size: 0.95rem; }
 .save:disabled { opacity: 0.6; }
 .meter { display: grid; grid-template-columns: 5.5rem 1fr 2.6rem; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
 .mlabel { font-size: 0.85rem; color: var(--text-dim); }
 .bar { height: 9px; border-radius: 999px; background: var(--line); overflow: hidden; }
 .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), #ffcf4d); border-radius: 999px; }
 .afinm .bar i { background: linear-gradient(90deg, var(--accent), #58e6cf); }
+.knowm .bar i { background: linear-gradient(90deg, #8b7cf0, #b0a4ff); }
 .mval { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; color: var(--text); font-size: 0.9rem; }
 .muted { color: var(--text-dim); font-size: 0.92rem; margin: 0.2rem 0; }
 .sub { font-size: 0.82rem; margin-top: 0.4rem; }
