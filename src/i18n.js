@@ -17,13 +17,43 @@ export const messages = {
     tagline: 'Calificador de perfiles y redes',
     intro: 'Deja tu calificación de personas, sitios web y cuentas. Lo que dice tu red pesa; el ruido de desconocidos, no.',
     search: {
-      placeholder: 'Pega un sitio, @cuenta, correo, o elige un perfil…',
-      hint: 'Un dominio (tienda.com), una cuenta (@alguien), un correo, o el perfil de alguien.',
+      pick: '¿Qué vas a calificar?',
       go: 'Abrir',
-      invalid: 'No reconozco eso. Prueba con un dominio, @cuenta, correo o perfil.',
       recent: 'Vistos hace poco',
+      // Una cuenta es siempre de una red concreta: el usuario elige cuál. Nada
+      // se adivina (un «@juan» a secas puede ser de X, de LinkedIn o de GitHub).
+      ph: {
+        domain: 'tienda.com',
+        x: 'usuario',
+        linkedin: 'juan-perez',
+        github: 'usuario',
+        email: 'alguien@correo.com',
+        profile: 'Pega aquí la llave pública…',
+      },
+      hint: {
+        domain: 'La dirección del sitio web, sin https://',
+        x: 'El nombre de usuario en X, sin la @. También sirve pegar el enlace.',
+        linkedin: 'El identificador de LinkedIn, sin la @. También sirve pegar el enlace.',
+        github: 'El nombre de usuario en GitHub, sin la @. También sirve pegar el enlace.',
+        email: 'El correo no se guarda: viaja convertido en un código que no se puede revertir.',
+        profile: 'La llave pública de esa persona. Si te compartieron su enlace, ábrelo y llegas directo.',
+      },
+      invalid: {
+        domain: 'Eso no parece un sitio web. Ejemplo: tienda.com',
+        x: 'Eso no parece un usuario de X. Ejemplo: dotrino',
+        linkedin: 'Eso no parece un identificador de LinkedIn. Ejemplo: juan-perez',
+        github: 'Eso no parece un usuario de GitHub. Ejemplo: imdotrino',
+        email: 'Eso no parece un correo. Ejemplo: alguien@correo.com',
+        profile: 'Eso no parece una llave pública.',
+      },
     },
-    types: { profile: 'Perfil', domain: 'Sitio', x: 'Cuenta X', github: 'GitHub', linkedin: 'LinkedIn', email: 'Correo' },
+    // Corto, para los chips y los recientes.
+    types: { profile: 'Perfil', domain: 'Sitio', x: 'X', github: 'GitHub', linkedin: 'LinkedIn', email: 'Correo' },
+    // Largo, para la ficha: una cuenta siempre dice de qué red es.
+    typesLong: {
+      profile: 'Perfil', domain: 'Sitio web', x: 'Cuenta de X', github: 'Cuenta de GitHub',
+      linkedin: 'Cuenta de LinkedIn', email: 'Correo',
+    },
     axes: {
       title: 'Tu opinión',
       afinidad: 'Afinidad',
@@ -68,13 +98,39 @@ export const messages = {
     tagline: 'Ratings for profiles and social accounts',
     intro: 'Leave your rating for people, websites and accounts. What your network says counts; noise from strangers doesn’t.',
     search: {
-      placeholder: 'Paste a site, @handle, email, or pick a profile…',
-      hint: 'A domain (shop.com), an account (@someone), an email, or someone’s profile.',
+      pick: 'What are you rating?',
       go: 'Open',
-      invalid: 'I don’t recognize that. Try a domain, @handle, email or profile.',
       recent: 'Seen recently',
+      ph: {
+        domain: 'shop.com',
+        x: 'username',
+        linkedin: 'jane-doe',
+        github: 'username',
+        email: 'someone@mail.com',
+        profile: 'Paste the public key here…',
+      },
+      hint: {
+        domain: 'The website address, without https://',
+        x: 'The X username, without the @. Pasting the link works too.',
+        linkedin: 'The LinkedIn identifier, without the @. Pasting the link works too.',
+        github: 'The GitHub username, without the @. Pasting the link works too.',
+        email: 'The address isn’t stored: it travels as a code that can’t be turned back.',
+        profile: 'That person’s public key. If they shared their link, open it and you’re there.',
+      },
+      invalid: {
+        domain: 'That doesn’t look like a website. Example: shop.com',
+        x: 'That doesn’t look like an X username. Example: dotrino',
+        linkedin: 'That doesn’t look like a LinkedIn identifier. Example: jane-doe',
+        github: 'That doesn’t look like a GitHub username. Example: imdotrino',
+        email: 'That doesn’t look like an email. Example: someone@mail.com',
+        profile: 'That doesn’t look like a public key.',
+      },
     },
-    types: { profile: 'Profile', domain: 'Site', x: 'X account', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email' },
+    types: { profile: 'Profile', domain: 'Site', x: 'X', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email' },
+    typesLong: {
+      profile: 'Profile', domain: 'Website', x: 'X account', github: 'GitHub account',
+      linkedin: 'LinkedIn account', email: 'Email',
+    },
     axes: {
       title: 'Your take',
       afinidad: 'Affinity',

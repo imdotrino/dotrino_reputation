@@ -3,7 +3,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { messages } from '../i18n'
 import { getReputation } from '../services/reputation'
 import { myPubkey } from '../services/identity'
-import { parseSubjectRef, samePubkey } from '@dotrino/reputation'
+import { parseSubjectRef } from '@dotrino/reputation'
 
 const props = defineProps({
   subject: { type: String, required: true }, // ref canónico
@@ -13,7 +13,8 @@ const emit = defineEmits(['need-name'])
 const t = computed(() => messages[props.lang])
 
 const parsed = computed(() => parseSubjectRef(props.subject))
-const typeLabel = computed(() => t.value.types[parsed.value.type] || parsed.value.type)
+// Largo a propósito: una cuenta siempre dice de qué red es ("Cuenta de LinkedIn").
+const typeLabel = computed(() => t.value.typesLong[parsed.value.type] || parsed.value.type)
 const typeIcon = { domain: '🌐', x: '𝕏', github: '⌨', linkedin: 'in', email: '✉', profile: '👤', unknown: '•' }
 
 // mi calificación (afinidad/confianza/conocimiento 0..5|null)
@@ -32,12 +33,9 @@ async function load () {
   const rep = await getReputation()
   if (!rep) { loading.value = false; return }
   try {
-    const { attestations } = await rep.getRatings(props.subject)
-    // Cada indicador es una atestación independiente (un registro firmado por
-    // canal), así que hay que fusionar TODAS las mías, no quedarse con la primera.
-    const me = myPubkey()
-    const mine = me ? attestations.filter((a) => a.issuer && samePubkey(a.issuer, me)) : []
-    const ind = Object.assign({}, ...mine.map((a) => a.indicators || {}))
+    // Cada eje es una atestación independiente: el paquete las fusiona (leer solo
+    // la primera devolvía un eje y los otros dos salían en 0).
+    const ind = await rep.myIndicatorsFor(props.subject)
     conf.value = num(ind.confianza)
     afin.value = num(ind.afinidad)
     conoce.value = num(ind.conoce)
