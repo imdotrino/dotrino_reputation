@@ -93,21 +93,21 @@ const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
     <div class="block">
       <h3>{{ t.axes.title }}</h3>
       <div class="axis">
-        <label>{{ t.axes.confianza }} <small>{{ t.axes.confianzaHint }}</small></label>
-        <div class="stars" role="radiogroup" :aria-label="t.axes.confianza">
-          <button v-for="i in 5" :key="i" class="star" :class="{ on: (conf || 0) >= i }"
-            @click="setStar('conf', i)" :aria-label="i + '/5'" data-testid="star-conf">★</button>
-        </div>
-      </div>
-      <div class="axis">
         <label>{{ t.axes.afinidad }} <small>{{ t.axes.afinidadHint }}</small></label>
         <div class="stars" role="radiogroup" :aria-label="t.axes.afinidad">
           <button v-for="i in 5" :key="i" class="star afin" :class="{ on: (afin || 0) >= i }"
             @click="setStar('afin', i)" :aria-label="i + '/5'" data-testid="star-afin">★</button>
         </div>
       </div>
+      <div class="axis">
+        <label>{{ t.axes.confianza }} <small>{{ t.axes.confianzaHint }}</small></label>
+        <div class="stars" role="radiogroup" :aria-label="t.axes.confianza">
+          <button v-for="i in 5" :key="i" class="star" :class="{ on: (conf || 0) >= i }"
+            @click="setStar('conf', i)" :aria-label="i + '/5'" data-testid="star-conf">★</button>
+        </div>
+      </div>
       <div class="axis row">
-        <label>{{ t.axes.conoce }}</label>
+        <label>{{ t.axes.conoce }} <small>{{ t.axes.conoceHint }}</small></label>
         <div class="toggle">
           <button :class="{ on: conoce === true }" @click="conoce = conoce === true ? null : true" data-testid="conoce-yes">{{ t.axes.yes }}</button>
           <button :class="{ on: conoce === false }" @click="conoce = conoce === false ? null : false" data-testid="conoce-no">{{ t.axes.no }}</button>
@@ -123,15 +123,15 @@ const aggAfin = computed(() => agg.value?.indicators?.afinidad || null)
       <h3>{{ t.agg.title }}</h3>
       <div v-if="loading" class="muted">{{ t.loading }}</div>
       <template v-else-if="agg && (aggConf?.trustedCount || aggAfin?.trustedCount)">
-        <div class="meter" v-if="aggConf && aggConf.score != null">
-          <span class="mlabel">{{ t.agg.confianza }}</span>
-          <span class="bar"><i :style="{ width: pct(aggConf.score) + '%' }"></i></span>
-          <span class="mval">{{ pct(aggConf.score) }}%</span>
-        </div>
         <div class="meter afinm" v-if="aggAfin && aggAfin.score != null">
           <span class="mlabel">{{ t.agg.afinidad }}</span>
           <span class="bar"><i :style="{ width: pct(aggAfin.score) + '%' }"></i></span>
           <span class="mval">{{ pct(aggAfin.score) }}%</span>
+        </div>
+        <div class="meter" v-if="aggConf && aggConf.score != null">
+          <span class="mlabel">{{ t.agg.confianza }}</span>
+          <span class="bar"><i :style="{ width: pct(aggConf.score) + '%' }"></i></span>
+          <span class="mval">{{ pct(aggConf.score) }}%</span>
         </div>
         <p class="sub muted">{{ t.agg.trusted(aggConf?.trustedCount || aggAfin?.trustedCount || 0) }} · {{ t.agg.raw(agg.rawCount || 0) }}</p>
       </template>
