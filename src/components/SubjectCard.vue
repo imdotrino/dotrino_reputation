@@ -3,7 +3,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { messages } from '../i18n'
 import { getReputation } from '../services/reputation'
 import { myPubkey } from '../services/identity'
-import { parseSubjectRef } from '@dotrino/reputation'
+import { parseSubjectRef, samePubkey } from '@dotrino/reputation'
 
 const props = defineProps({
   subject: { type: String, required: true }, // ref canónico
@@ -33,12 +33,14 @@ async function load () {
   if (!rep) { loading.value = false; return }
   try {
     const { attestations } = await rep.getRatings(props.subject)
-    const mine = attestations.find((a) => a.issuer === myPubkey())
-    if (mine && mine.indicators) {
-      conf.value = num(mine.indicators.confianza)
-      afin.value = num(mine.indicators.afinidad)
-      conoce.value = num(mine.indicators.conoce)
-    }
+    // Cada indicador es una atestación independiente (un registro firmado por
+    // canal), así que hay que fusionar TODAS las mías, no quedarse con la primera.
+    const me = myPubkey()
+    const mine = me ? attestations.filter((a) => a.issuer && samePubkey(a.issuer, me)) : []
+    const ind = Object.assign({}, ...mine.map((a) => a.indicators || {}))
+    conf.value = num(ind.confianza)
+    afin.value = num(ind.afinidad)
+    conoce.value = num(ind.conoce)
     agg.value = await rep.reputationOf(props.subject)
   } catch (_) {}
   loading.value = false
