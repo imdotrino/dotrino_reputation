@@ -14,8 +14,8 @@ export function detectLang () {
 
 export const messages = {
   es: {
-    tagline: 'Califica y pregunta sobre cualquier cosa',
-    intro: 'Personas, sitios web, cuentas. Lo que dice tu red pesa; el ruido de desconocidos, no.',
+    tagline: 'Calificador de perfiles y redes',
+    intro: 'Deja tu calificación de personas, sitios web y cuentas. Lo que dice tu red pesa; el ruido de desconocidos, no.',
     search: {
       placeholder: 'Pega un sitio, @cuenta, correo, o elige un perfil…',
       hint: 'Un dominio (tienda.com), una cuenta (@alguien), un correo, o el perfil de alguien.',
@@ -65,8 +65,8 @@ export const messages = {
     empty: 'Busca algo arriba para calificarlo o preguntar sobre ello.',
   },
   en: {
-    tagline: 'Rate & ask about anything',
-    intro: 'People, websites, accounts. What your network says counts; noise from strangers doesn’t.',
+    tagline: 'Ratings for profiles and social accounts',
+    intro: 'Leave your rating for people, websites and accounts. What your network says counts; noise from strangers doesn’t.',
     search: {
       placeholder: 'Paste a site, @handle, email, or pick a profile…',
       hint: 'A domain (shop.com), an account (@someone), an email, or someone’s profile.',

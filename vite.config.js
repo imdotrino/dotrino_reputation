@@ -33,7 +33,7 @@ export default defineConfig({
       manifest: {
         name: 'Reputation — Dotrino',
         short_name: 'Reputation',
-        description: 'Califica y pregunta sobre cualquier cosa: perfiles, sitios, cuentas. Ponderado por tu red de confianza, sin rastreo.',
+        description: 'Calificador de perfiles y redes: deja tu calificación de personas, sitios y cuentas. Ponderado por tu red de confianza, sin rastreo.',
         theme_color: '#0e1214',
         background_color: '#0e1214',
         display: 'standalone',
